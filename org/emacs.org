@@ -1,0 +1,140 @@
+#+TITLE: Emacs configuration File
+#+AUTHOR: Brenton Bills
+#+EMAIL: brenton.bills@gmail.com
+
+* Introduction
+
+  This is my =.emacs= file, written using [[http://orgmode.org][org-mode]]. A way to learn
+  org-mode as well as taking notes on the complexity so that I can
+  understand it later when I've forgotten. I used Howard Abrams 
+  [[https://github.com/howardabrams/dot-files/][dot files]] as an example on how to do this.
+
+** Initialisation file
+
+ #+BEGIN_SRC elisp :tangle ~/.emacs.d/init.el
+   (load-file "~/.emacs.d/elisp/init-main.el")
+   (server-start)
+ #+END_SRC
+   
+* General Settings
+** Directory Location
+
+   #+BEGIN_SRC elisp
+     (defconst bb/emacs-directory (concat (getenv "HOME") "/.emacs.d/"))
+     (defun bb/emacs-subdirectory (d) (expand-file-name d bb/emacs-directory))
+   #+END_SRC
+
+** Directory Structure
+
+   If this is the first time we've run this on this computer, we need
+   to ensure the following directories have been created.
+
+   #+BEGIN_SRC elisp
+     (let* ((subdirs '("elisp" "backups" "snippets" "ac-dict"))
+             (fulldirs (mapcar (lambda (d) (bb/emacs-subdirectory d)) subdirs)))
+       (dolist (dir fulldirs)
+         (when (not (file-exists-p dir))
+           (message "Make directory: %s" dir)
+           (make-directory dir))))
+   #+END_SRC
+
+** Customisation
+
+   #+BEGIN_SRC elisp
+     (setq custom-file (expand-file-name "custom.el" bb/emacs-directory))
+     (when (file-exists-p custom-file)
+       (load custom-file))
+   #+END_SRC
+
+** Custom Elisp Load Path
+
+   Extra packages not available via the package manager.
+
+   #+BEGIN_SRC elisp
+     (add-to-list 'load-path (bb/emacs-subdirectory "elisp"))
+   #+END_SRC
+   
+* Package Initialisation
+;;** Emacs 25.1.50 fix for packaging.
+;;
+;;   As found in the spacemacs [[https://github.com/syl20bnr/spacemacs/issues/3854][github issues]]
+;;
+;;   #+BEGIN_SRC elisp
+;;    (load-library "url-handlers")
+;;   #+END_SRC
+
+** Package Manager
+
+   Add in package sources from the usual places.
+
+   #+BEGIN_SRC elisp
+     (require 'package)
+     (setq package-archives '(("org" . "http://orgmode.org/elpa/")
+                              ("gnu" . "http://elpa.gnu.org/packages/")
+                              ("melpa" . "http://melpa.milkbox.net/packages/")
+                              ("marmalade" . "https://marmalade-repo.org/packages/")))
+   #+END_SRC
+
+   Refresh the package metadata defined in the package-archives.
+
+   #+BEGIN_SRC elisp
+     (package-initialize)
+     (when (not package-archive-contents)
+        (package-refresh-contents))
+   #+END_SRC
+
+   
+** Use package
+
+   #+BEGIN_SRC elisp
+     (unless (package-installed-p 'use-package)
+        (package-refresh-contents)
+        (package-install 'use-package))
+     (require 'use-package)
+   #+END_SRC
+
+   # #+BEGIN_SRC elisp
+   #    (defvar bb/custom-packages 
+   #        '(better-defaults ;; A set of good defaults for emacs.
+   #          flycheck
+   #          flycheck-color-mode-line
+   #          flx
+   #          flx-ido
+   #          ido-vertical-mode
+   #          undo-tree
+   #          yasnippet))
+
+   #    (packages-install bb/custom-packages)
+   # #+END_SRC
+
+** Better defaults
+
+   Install Phil Hagelberg's [[https://github.com/technomancy/better-defaults][better defaults]] package. A few better defaults
+   for emacs over the standard configuration based on agreement on freenodes
+   #emacs.
+
+   #+BEGIN_SRC elisp
+     (use-package better-defaults :ensure better-defaults)
+   #+END_SRC
+
+
+
+#+DESCRIPTION: A literate programming version of my Emacs Initialization script, loaded by the .emacs file.
+#+PROPERTY:    results silent
+#+PROPERTY:    header-args:sh  :tangle no
+#+PROPERTY:    tangle ~/.emacs.d/elisp/init-main.el
+#+PROPERTY:    eval no-export
+#+PROPERTY:    comments org
+#+OPTIONS:     num:nil toc:nil todo:nil tasks:nil tags:nil
+#+OPTIONS:     skip:nil author:nil email:nil creator:nil timestamp:nil
+#+INFOJS_OPT:  view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+* Client
+  #+BEGIN_SRC elisp
+   (require 'init-client)
+  #+END_SRC
+
+* Org-Mode
+
+  #+BEGIN_SRC elisp
+    (require 'init-org-mode)
+  #+END_SRC
