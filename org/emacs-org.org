@@ -1,6 +1,8 @@
-#+TITLE: Emacs Org-Mode Settings
+#+TITLE:  Emacs Org
 #+AUTHOR: Brenton Bills
-#+EMAIL: Brenton.Bills@gmail.com
+#+EMAIL:  brenton.bills@gmail.com
+#+DATE:   2016 Mar 22
+#+TAGS:   emacs org-mode
 
 * Inital Settings
 
