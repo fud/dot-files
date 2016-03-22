@@ -27,6 +27,14 @@
       :config (use-package monokai-theme :ensure t))
   #+END_SRC
 
+* Keymaps
+
+  Map goto line in a file to a much simpler key.
+
+  #+BEGIN_SRC elisp
+    (global-set-key (kbd "M-g") 'goto-line)
+  #+END_SRC
+
 * Provide
 
   Need to provide the =init-client= so this file can be required.
@@ -34,7 +42,6 @@
   #+BEGIN_SRC elisp
     (provide 'init-client)
   #+END_SRC
-
 
 #+DESCRIPTION: A literate programming version of my Emacs Initialization of Org-Mode
 #+PROPERTY:    results silent
