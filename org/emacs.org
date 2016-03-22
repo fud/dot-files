@@ -54,6 +54,12 @@
      (add-to-list 'load-path (bb/emacs-subdirectory "elisp"))
    #+END_SRC
    
+** Variables
+
+  #+BEGIN_SRC elisp
+    (setq user-mail-address "brenton.bills@gmail.com")
+  #+END_SRC
+
 * Package Initialisation
 ;;** Emacs 25.1.50 fix for packaging.
 ;;
@@ -138,3 +144,36 @@
   #+BEGIN_SRC elisp
     (require 'init-org-mode)
   #+END_SRC
+* Programming
+** Yasnippets
+
+   #+BEGIN_SRC elisp
+     (use-package yasnippet
+       :ensure t
+       :init
+       (yas-global-mode 1)
+       :config
+       (add-to-list 'yas-snippet-dirs (bb/emacs-subdirectory "snippets")))
+   #+END_SRC
+
+** Flycheck
+
+  [[https://github.com/flycheck/flycheck][Flycheck]] seems to be quite superior to flycheck.
+
+  #+BEGIN_SRC elisp
+    (use-package flycheck
+      :ensure t
+      :init
+      (add-hook 'after-init-hook 'global-flycheck-mode)
+      :config
+      (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
+   #+END_SRC
+
+** Javascript
+
+  See [[file:emacs-javascript.org][emacs-javascript.el]] for details on working with JavaScript.
+
+  #+BEGIN_SRC elisp
+    (require 'init-javascript)
+  #+END_SRC
+  
