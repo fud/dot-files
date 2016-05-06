@@ -48,12 +48,9 @@
     (org-babel-tangle)
     (kill-buffer))
 
-  (dolist (orgfile (directory-files (concat dot-files-src "org")))
-    (unless (member orgfile '("." ".."))
-      (let ((orgfile-path (concat dot-files-src (file-name-as-directory "org") orgfile)))
-       (message "file is %s" orgfile-path)
-       (bb/tangle-file orgfile-path))))
-
+  (dolist (orgfile (directory-files (concat dot-files-src "org") t "[.]org\\'"))
+    (message "file is %s" orgfile)
+    (bb/tangle-file orgfile))
 )
 
 (bb/build-dot-files)
