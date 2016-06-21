@@ -6,11 +6,16 @@
 
 * Inital Settings
 
-  #+BEGIN_SRC elisp
-    (use-package org 
-       :ensure t
-       :pin melpa)
-  #+END_SRC
+#+BEGIN_SRC elisp
+  (use-package org
+     :ensure org-plus-contrib
+     :config
+     (org-babel-do-load-languages
+       'org-babel-load-languages
+       '((sh . t)
+         (emacs-lisp . t)
+         (python . t))))
+#+END_SRC
 
 * Provide
 
