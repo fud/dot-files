@@ -7,15 +7,17 @@
 * Fonts settings
 
   #+BEGIN_SRC elisp
-    (defvar bb/fixed-font-family
-      (cond ((x-list-fonts "Hasklig")                    "Hasklig Regular")
-            ((x-list-fonts "Source Code Pro Regular")    "Source Code Pro Regular")
-            ((x-list-fonts "Inconsolata Awesome Medium") "Inconsolata Awesome medium"))
-      "My fixed width font based on what is installed, `nil' if not defined.")
-
-    (set-frame-font bb/fixed-font-family)
-    (set-face-attribute 'default nil :font bb/fixed-font-family :height 130)
-    (set-face-font 'default bb/fixed-font-family)
+    (if window-system
+        (progn
+          (defvar bb/fixed-font-family
+            (cond ((x-list-fonts "Hasklig")                    "Hasklig Regular")
+                  ((x-list-fonts "Source Code Pro Regular")    "Source Code Pro Regular")
+                  ((x-list-fonts "Inconsolata Awesome Medium") "Inconsolata Awesome medium"))
+            "My fixed width font based on what is installed, `nil' if not defined.")
+          (when bb/fixed-font-family
+            (set-frame-font bb/fixed-font-family)
+            (set-face-attribute 'default nil :font bb/fixed-font-family :height 130)
+            (set-face-font 'default bb/fixed-font-family))))
   #+END_SRC
   
 * Color theme
