@@ -29,12 +29,27 @@
       :config (use-package monokai-theme :ensure t))
   #+END_SRC
 
-* Keymaps
+* Movement
 
-  Map goto line in a file to a much simpler key.
+  Map goto line to a much simpler key.
 
   #+BEGIN_SRC elisp
     (global-set-key (kbd "M-g") 'goto-line)
+  #+END_SRC
+
+  Set beginning / end of line with home and end.
+
+  #+BEGIN_SRC elisp
+     (global-set-key [home] 'beginning-of-line)
+     (global-set-key [end] 'end-of-line)
+  #+END_SRC
+
+  Arrow keys for moving around. 100% easier after using the
+  standard keys for years.
+
+  #+BEGIN_SRC elisp
+     (when (fboundp 'windmove-default-keybindings)
+       (windmove-default-keybindings))
   #+END_SRC
 
 * Provide

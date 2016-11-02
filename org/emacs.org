@@ -6,7 +6,7 @@
 
   This is my =.emacs= file, written using [[http://orgmode.org][org-mode]]. A way to learn
   org-mode as well as taking notes on the complexity so that I can
-  understand it later when I've forgotten. I used Howard Abrams 
+  understand it later when I've forgotten. I used Howard Abrams
   [[https://github.com/howardabrams/dot-files/][dot files]] as an example on how to do this.
 
 ** Initialisation file
@@ -15,7 +15,7 @@
    (load-file "~/.emacs.d/elisp/init-main.el")
    (server-start)
  #+END_SRC
-   
+
 * General Settings
 ** Directory Location
 
@@ -53,7 +53,7 @@
    #+BEGIN_SRC elisp
      (add-to-list 'load-path (bb/emacs-subdirectory "elisp"))
    #+END_SRC
-   
+
 ** Variables
 
   #+BEGIN_SRC elisp
@@ -89,7 +89,7 @@
         (package-refresh-contents))
    #+END_SRC
 
-   
+
 ** Use package
 
    #+BEGIN_SRC elisp
@@ -100,7 +100,7 @@
    #+END_SRC
 
    # #+BEGIN_SRC elisp
-   #    (defvar bb/custom-packages 
+   #    (defvar bb/custom-packages
    #        '(better-defaults ;; A set of good defaults for emacs.
    #          flycheck
    #          flycheck-color-mode-line
@@ -144,6 +144,13 @@
   #+BEGIN_SRC elisp
     (require 'init-org-mode)
   #+END_SRC
+* Editing
+** Trailing whitespace
+
+    #+BEGIN_SRC elisp
+      (add-hook 'before-save-hook 'delete-trailing-whitespace)
+    #+END_SRC
+
 * Programming
 ** Yasnippets
 
@@ -156,6 +163,13 @@
        (add-to-list 'yas-snippet-dirs (bb/emacs-subdirectory "snippets")))
    #+END_SRC
 
+   Turn off yansippets for ANSI term as it breaks.
+
+   #+BEGIN_SRC elisp
+     (add-hook 'term-mode-hook (lambda()
+                     (yas-minor-mode -1)))
+   #+END_SRC
+
 ** Flycheck
 
   [[https://github.com/flycheck/flycheck][Flycheck]] seems to be quite superior to flycheck.
@@ -166,10 +180,18 @@
       :init
       (add-hook 'after-init-hook 'global-flycheck-mode)
       :config
-      (setq-default flycheck-disabled-checkers 
+      (setq-default flycheck-disabled-checkers
          '(emacs-lisp-checkdoc)))
    #+END_SRC
 
+** Visual Bell
+
+   Fix the visual bell screwing up the screen
+
+   #+BEGIN_SRC elisp
+     (setq visual-bell nil)
+     (setq ring-bell-function 'ignore)
+   #+END_SRC
 ** Javascript
 
   See [[file:emacs-javascript.org][emacs-javascript.el]] for details on working with JavaScript.
@@ -177,7 +199,7 @@
   #+BEGIN_SRC elisp
     (require 'init-javascript)
   #+END_SRC
-  
+
 
 #+DESCRIPTION: A literate programming version of my Emacs Initialization script, loaded by the .emacs file.
 #+PROPERTY:    results silent
