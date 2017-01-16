@@ -148,7 +148,7 @@
 ** Trailing whitespace
 
     #+BEGIN_SRC elisp
-      (add-hook 'before-save-hook 'delete-trailing-whitespace)
+      (add-hook 'before-save-hook 'whitespace-cleanup)
     #+END_SRC
 
 * Programming
